@@ -1,9 +1,11 @@
 package network
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
+	"org.donghyuns.com/graph/neo4j/configs"
 	"org.donghyuns.com/graph/neo4j/middlewares"
 )
 
@@ -13,7 +15,7 @@ func OpenServer() *http.Server {
 	middlewares := middlewares.CorsMiddlewares(server)
 
 	serving := &http.Server{
-		Addr:         ":8080",
+		Addr:         fmt.Sprintf(":%s", configs.GlobalConfiguration.AppPort),
 		Handler:      middlewares,
 		WriteTimeout: 30 * time.Second,
 		ReadTimeout:  30 * time.Second,
