@@ -26,17 +26,17 @@ func CreateSinglePerson(name string, age string, languageList []string, techName
 	return nil
 }
 
-func GetPerson(name string) (error, []Person) {
+func GetPerson(name string) ([]Person, error) {
 	dbCon, dbConErr := database.InitGraphConnect()
 
 	if dbConErr != nil {
-		return dbConErr, []Person{}
+		return []Person{}, dbConErr
 	}
 
 	result, resultErr := dbCon.QueryOne(GetPersonQuery, map[string]interface{}{"name": name})
 
 	if resultErr != nil {
-		return resultErr, []Person{}
+		return []Person{}, resultErr
 	}
 
 	var personList []Person
@@ -66,5 +66,5 @@ func GetPerson(name string) (error, []Person) {
 
 	log.Printf("[SINGLE_PERSON] Get single person: %v", personList)
 
-	return nil, personList
+	return personList, nil
 }
