@@ -13,8 +13,8 @@ type GraphDb struct {
 	neo4j.DriverWithContext
 }
 
-func InitGraphConnect() GraphDb {
-	// ctx := context.Background()
+// Initialize Graph Database Driver
+func InitGraphConnect() (GraphDb, error) {
 	databaseConfig := configs.DatabaseConfiguration
 
 	log.Printf("[GRAPH_DB] Configuration: %v", databaseConfig)
@@ -26,16 +26,17 @@ func InitGraphConnect() GraphDb {
 
 	if err != nil {
 		log.Printf("[GRAPH_DB] Creating Instance Error: %v", err)
-		return GraphDb{}
+		return GraphDb{}, err
 	}
 
 	log.Printf("[GRAPH_DB] Instance Created")
 
 	connection := GraphDb{driver}
 
-	return connection
+	return connection, nil
 }
 
+// Check Connection
 func (db *GraphDb) CheckConnection() error {
 	ctx := context.Background()
 
@@ -52,6 +53,7 @@ func (db *GraphDb) CheckConnection() error {
 	return nil
 }
 
+// Get One
 func (db *GraphDb) QueryOne(queryString string, argumentList map[string]any) ([]*db.Record, error) {
 	ctx := context.Background()
 
@@ -75,6 +77,7 @@ func (db *GraphDb) QueryOne(queryString string, argumentList map[string]any) ([]
 	return result.Records, nil
 }
 
+// Insert one
 func (db *GraphDb) Insert(queryString string, argumentList map[string]any) ([]*db.Record, error) {
 	ctx := context.Background()
 

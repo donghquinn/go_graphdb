@@ -14,7 +14,7 @@ func main() {
 
 	server.ListenAndServe()
 
-	// dbCon := database.InitGraphConnect()
+	// dbCon, dbConErr := database.InitGraphConnect()
 
 	// dbCon.CheckConnection()
 	// dbCon.QueryOne("CREATE (n:Person{name:'Kim'})-[l:LIKES]->(t:Technology{name:'golang'})", nil)
