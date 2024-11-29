@@ -32,3 +32,22 @@ func InitGraphConnect() GraphDb {
 
 	return connection
 }
+
+func (db *GraphDb) CheckConnection() error {
+	ctx := context.Background()
+
+	err := db.VerifyConnectivity(ctx)
+
+	if err != nil {
+		log.Printf("[GRAPH_DB] Check Connection Error: %v", err)
+		return err
+	}
+
+	return nil
+}
+
+func (db *GraphDb) QueryOne(queryString string) {
+	ctx := context.Background()
+
+	db.ExecuteQuery(ctx, )
+}
