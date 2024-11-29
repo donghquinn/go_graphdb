@@ -7,6 +7,7 @@ import (
 	"org.donghyuns.com/graph/neo4j/database"
 )
 
+// Insert New Person Node And Tech Node
 func CreateSinglePerson(name string, age string, languageList []string, techName string) error {
 	dbCon, dbConErr := database.InitGraphConnect()
 
@@ -14,7 +15,12 @@ func CreateSinglePerson(name string, age string, languageList []string, techName
 		return dbConErr
 	}
 
-	queryArguments := map[string]interface{}{"name": name, "age": age, "languages": languageList, "tech": techName}
+	queryArguments := map[string]interface{}{
+		"name":      name,
+		"age":       age,
+		"languages": languageList,
+		"tech":      techName,
+	}
 
 	queryErr := dbCon.Insert(CreatePersonQuery, queryArguments)
 
@@ -26,6 +32,7 @@ func CreateSinglePerson(name string, age string, languageList []string, techName
 	return nil
 }
 
+// Get Person Node List By Name
 func GetPerson(name string) ([]Person, error) {
 	dbCon, dbConErr := database.InitGraphConnect()
 
