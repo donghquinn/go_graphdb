@@ -78,14 +78,14 @@ func (db *GraphDb) QueryOne(queryString string, argumentList map[string]any) ([]
 }
 
 // Insert one
-func (db *GraphDb) Insert(queryString string, argumentList map[string]any) ([]*db.Record, error) {
+func (db *GraphDb) Insert(queryString string, argumentList map[string]any) error {
 	ctx := context.Background()
 
 	result, queryErr := neo4j.ExecuteQuery(ctx, db, queryString, argumentList, neo4j.EagerResultTransformer, neo4j.ExecuteQueryWithDatabase("neo4j"))
 
 	if queryErr != nil {
 		log.Printf("[GRAPH_DB] Query Error: %v", queryErr)
-		return nil, queryErr
+		return queryErr
 	}
 
 	defer db.Close(ctx)
@@ -95,5 +95,5 @@ func (db *GraphDb) Insert(queryString string, argumentList map[string]any) ([]*d
 		summary.Counters().NodesCreated(),
 		summary.ResultAvailableAfter())
 
-	return result.Records, nil
+	return nil
 }

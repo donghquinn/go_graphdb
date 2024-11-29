@@ -3,19 +3,21 @@ package main
 import (
 	"github.com/joho/godotenv"
 	"org.donghyuns.com/graph/neo4j/configs"
-	"org.donghyuns.com/graph/neo4j/network"
 )
 
 func main() {
 	godotenv.Load(".env")
 
 	configs.SetDatabaseConfiguration()
-	server := network.OpenServer()
+	// server := network.OpenServer()
 
-	server.ListenAndServe()
+	// server.ListenAndServe()
 
 	// dbCon, dbConErr := database.InitGraphConnect()
 
 	// dbCon.CheckConnection()
-	// dbCon.QueryOne("CREATE (n:Person{name:'Kim'})-[l:LIKES]->(t:Technology{name:'golang'})", nil)
+
+	// 테스트용
+	// person.CreateSinglePerson("Kim", "25", []string{"Typescript", "Golang", "Python"}, "Golang")
+	// person.GetPerson("Kim")
 }
