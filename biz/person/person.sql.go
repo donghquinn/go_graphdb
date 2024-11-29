@@ -1,16 +1,16 @@
 package person
 
 var CreatePersonQuery = `
-	CREATE (p:Person {name: $name, age: $age, languages: $languages})-[l:LIKES]->(t:Technology {name: $tech})
+	MERGE (p:Person {name: $name, age: $age, languages: $languages})-[l:LIKES]->(t:Technology {name: $tech})
 `
 
-var GetPersonQuery = `
+var GetPersonQueryByName = `
 	MATCH (p:Person)
 	WHERE p.name = $name
 	RETURN p
 `
 
-var GetPersonWithTechQuery = `
+var GetPersonWithTechQueryByName = `
 	MATCH(p:Person)-[l:LIKES]->(t:Technology)
 	WHERE p.name = $name
 	RETURN p, COLLECT(t) as techs

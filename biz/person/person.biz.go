@@ -40,7 +40,7 @@ func GetPerson(name string) ([]Person, error) {
 		return []Person{}, dbConErr
 	}
 
-	result, resultErr := dbCon.QueryOne(GetPersonQuery, map[string]interface{}{"name": name})
+	result, resultErr := dbCon.QueryOne(GetPersonQueryByName, map[string]interface{}{"name": name})
 
 	if resultErr != nil {
 		return []Person{}, resultErr
@@ -59,8 +59,6 @@ func GetPerson(name string) ([]Person, error) {
 		log.Printf("[SINGLE_PERSON] Get single person: %v", person)
 
 		personProperties := person.(dbtype.Node).Props
-
-		log.Printf("[SINGLE_PERSON] DB Type Node: %v", personProperties)
 
 		personData := Person{
 			Name:      personProperties["name"].(string),
