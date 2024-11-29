@@ -46,8 +46,20 @@ func (db *GraphDb) CheckConnection() error {
 	return nil
 }
 
-func (db *GraphDb) QueryOne(queryString string) {
+func (db *GraphDb) QueryOne(queryString string, argumentList map[string]any) {
 	ctx := context.Background()
 
-	db.ExecuteQuery(ctx, )
+	result, queryErr := neo4j.ExecuteQuery(ctx, db, queryString, argumentList, neo4j.EagerResultTransformer, neo4j.ExecuteQueryWithDatabase("neo4j"))
+
+	if queryErr != nil {
+		log.Printf("[GRAPH_DB] Query Error: %v", queryErr)
+	}
+
+	for _, record := range result.Records {
+		log.Printf("[GRAPH_DB] Query Result: %v", record.Values...)
+	}
+
+	log.Printf("The query `%v` returned %v records in %+v.\n",
+		result.Summary.Query().Text(), len(result.Records),
+		result.Summary.ResultAvailableAfter())
 }
